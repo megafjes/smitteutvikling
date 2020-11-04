@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div class="chartNtnuExternal"></div>
+  <script type="module">
+  import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+  import define from "https://api.observablehq.com/@gorm/smitteutvikling.js?v=3";
+  (new Runtime).module(define, name => {
+    if (name === "chartNtnuExternal") return Inspector.into(".chartNtnuExternal")();
+  });
+  </script>
+  
+</body>
+</html>
