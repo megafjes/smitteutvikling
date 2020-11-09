@@ -3,16 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+  <script src="https://unpkg.com/dayjs@1.8.21/locale/nb.js"></script>
+
+<style>
+
+
+#chart section {
+  display: grid;
+  grid-template-columns: 100px minmax(200px, 300px) 100px;
+
+}
+
+.city {
+}
+
+.svg {
+  height: 0;
+  padding-bottom: 20%;
+}
+
+.total {
+}
+
+
+
+</style>
+
 </head>
-<body>
-  <div class="chartNtnuExternal"></div>
-  <script type="module">
-  import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-  import define from "https://api.observablehq.com/@gorm/smitteutvikling.js?v=3";
-  (new Runtime).module(define, name => {
-    if (name === "chartNtnuExternal") return Inspector.into(".chartNtnuExternal")();
-  });
-  </script>
+<body style="max-width: 1000px; margin: auto;">
+  
+  
+  <div id="chart"></div>
+  
+  
+  <script src="script.js"></script>
+
   
 </body>
 </html>
