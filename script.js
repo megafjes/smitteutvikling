@@ -8,9 +8,13 @@ const ntnuSupportColorsLighter = ["#ebf0c4", "#cfdaf1", "#fdd9b5", "#e3bcda", "#
 
 const startDate = new Date(2020, 9, 1)
 
+const w = 600
+const h = 300
+const margin = { top: 10, bottom: 20, left: 10, right: 20 }
+
 const xScale = d3.scaleTime()
   .domain([startDate, new Date().setHours(0, 0, 0)])
-  .range([0, 200])
+  .range([0, w - margin.left - margin.right])
 
 const emptyTimeline = d3.timeDays(startDate, new Date()).map(d => {
   return { 
@@ -68,8 +72,8 @@ getFacultiesTrondheim = data => {
 
 drawChart = (data, group) => {
   const yScale = d3.scaleLinear()
-    .domain([0, d3.max(Object.values(data).map(d => d.maxPerDay))])
-    .range([39, 1])
+    .domain([0, d3.max([...Object.values(data).map(d => d.maxPerDay), 15])])
+    .range([h - margin.bottom, margin.top])
 
   const area = d3.area()
     .x(d => xScale(d.date))
@@ -81,19 +85,10 @@ drawChart = (data, group) => {
   const chart = d3.select("#chart")
   
   Object.entries(data).forEach(d => {
-    const section = chart.append('section')
-    section.append('div')
-      .classed('city', true)
-      .text(d[0])
-
-    const svg = section.append('div')
-      .classed('svg', true)
-      .append('svg')
-        .attr('viewBox', '0 0 200 40')
-
-    section.append('div')
-      .classed('total', true)
-      .text(d3.sum(d[1][group].map(r => r.value)))
+    const svg = chart.append('svg')
+      .attr('viewBox', `0 0 ${w} ${h}`)
+        // .attr('width', w)
+        // .attr('height', h)
 
     svg.append('path')
       .attr('d', area(d[1][group]))
