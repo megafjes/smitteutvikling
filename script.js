@@ -16,7 +16,7 @@ const emptyTimeline = d3.timeDays(startDate, new Date()).map(d => {
   return { 
     date: d, 
     value: 0, 
-    label: dayjs(new Date(d)).format('D MMMM'), 
+    label: dayjs(new Date(d)).format('D MMMM')
   }
 })
 
