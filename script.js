@@ -146,14 +146,27 @@ const drawSection = (d, group) => {
     .text(`Totalt antall innmeldte smittede ${group}: ${d[1]['studenterSum']}`)
 }
 
+
+
+const drawHeatmap = data => {
+  const chart = d3.select("#chart")
+
+  chart.append('div').text("test")
+}
+
 drawChart = (data, group) => {
   
-  console.log(data)
+
   Object.entries(data).forEach(d => {
     drawSection(d, group)
     if (d[1].fak) {
-      Object.entries(d[1].fak).sort((a,b) => b[1]['maxPerDay'] - a[1]['maxPerDay']).forEach(f => {
-        drawSection(f, group)
+      const faculties = Object.entries(d[1].fak).sort((a,b) => b[1]['maxPerDay'] - a[1]['maxPerDay'])
+      const heatmapColorScale = d3.scaleLinear()
+        .domain([0, d3.max(faculties, f => f[1]['maxPerDay'])])
+        .range(["white", "red"])
+
+      faculties.forEach(f => {
+        drawHeatmap(f)
       })
     }
   })
