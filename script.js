@@ -153,6 +153,7 @@ drawSection = (cityDiv, data, group) => {
       .attr("stroke-dasharray", "2,2"))
     .call(g => g.selectAll(".tick text")
       .attr("x", w - margin.right - margin.left + 10)
+      .style('font-family', "'Open Sans', sans-serif")
       .style('font-size', 'small')
       .style('font-weight', 300)
       .text(d => d))
@@ -163,6 +164,7 @@ drawSection = (cityDiv, data, group) => {
       .ticks(d3.timeMonth.every(1), '%m/%d/%y'))
     .call(g => g.selectAll(".tick text")
       .attr('text-anchor', 'start')
+      .style('font-family', "'Open Sans', sans-serif")
       .style('font-size', 'small')
       .style('font-weight', 300)
       .text(d => getMonthInNorwegian(d)))
@@ -170,16 +172,25 @@ drawSection = (cityDiv, data, group) => {
   svg.append('text')
     .attr('x', margin.left)
     .attr('y', margin.top - 30)
-    .style('font-size', 'larger')
+    .style('font-family', "'Open Sans', sans-serif")
     .style('font-weight', 600)
-    .text(data[0])
+    .text(`${data[0]}, ${group}`)
 
   svg.append('text')
     .attr('x', margin.left)
     .attr('y', margin.top - 15)
+    .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'small')
     .style('font-weight', 300)
-    .text(`Totalt antall innmeldt smittede: ${data[1][`${group}Sum`]}`)
+    .text(`Totalt antall innmeldt smittede:`)
+
+  svg.append('text')
+    .attr('x', margin.left + 188)
+    .attr('y', margin.top - 15)
+    .style('font-family', "'Open Sans', sans-serif")
+    .style('font-size', 'small')
+    .style('font-weight', 600)
+    .text(data[1][`${group}Sum`])
 }
 
 numberToColor = num => {
@@ -217,6 +228,7 @@ drawHeatmap = (div, data, group) => {
   svg.append('text')
     .attr('x', w - margin.right + 10)
     .attr('y', 11)
+    .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'small')
     .style('font-weight', 300)
     .text(`${data[0]}:`)
@@ -225,6 +237,7 @@ drawHeatmap = (div, data, group) => {
     .attr('text-anchor', 'end')
     .attr('x', w )
     .attr('y', 11)
+    .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'small')
     .style('font-weight', 300)
     .text(data[1][`${group}Sum`])
@@ -246,6 +259,7 @@ drawLegend = (div) => {
   svg.append('text')
     .attr('x', margin.left)
     .attr('y', 30)
+    .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'medium')
     .style('font-weight', 600)
     .text(`Per fakultet:`)
@@ -258,6 +272,7 @@ drawLegend = (div) => {
       .attr('text-anchor', 'middle')
       .attr('x', (d, i) => w - margin.right - legendBoxWidth*(4.5-i))
       .attr('y', 19)
+      .style('font-family', "'Open Sans', sans-serif")
       .style('font-size', 'small')
       .style('font-weight', 300)
       .text(d => {
@@ -289,7 +304,10 @@ drawChart = (data, group, cssSelector) => {
   Object.entries(data).forEach(d => {
     const cityDiv = d3.select(cssSelector)
       .style('min-width', '496px')
-      .style('max-width', '700px')
+      .style('max-width', '914px')
+      // .style('border-bottom', '0.5px solid gray')
+      .style('margin-bottom', '150px')
+      // .style('margin', 'auto')
       .append('div')
         .classed('city-div', true)
         .classed(group, true)
@@ -337,6 +355,7 @@ drawChart = (data, group, cssSelector) => {
             .ticks(d3.timeMonth.every(1), '%m/%d/%y'))
           .call(g => g.selectAll(".tick text")
             .attr('text-anchor', 'start')
+            .style('font-family', "'Open Sans', sans-serif")
             .style('font-size', 'small')
             .style('font-weight', 300)
             .text(d => getMonthInNorwegian(d)))
@@ -360,11 +379,7 @@ drawChart = (data, group, cssSelector) => {
     maxOverall.studenter = d3.max([...Object.values(dataNtnu).map(d => d['studenterMaxPerDay'])])
     maxOverall.ansatte = d3.max([...Object.values(dataNtnu).map(d => d['ansatteMaxPerDay'])])
 
-    // d3.select('#chart').append('h1').text('Studenter')
-
     drawChart(dataNtnu, 'studenter', '#studentsChart')
-
-    // d3.select('#chart').append('h1').text('Ansatte')
 
     drawChart(dataNtnu, 'ansatte', '#employeesChart')
     
