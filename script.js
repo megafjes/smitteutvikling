@@ -16,7 +16,7 @@ const colorOfBad = "#b01b81"
 let maxOverall = {}
 
 const x = d3.scaleTime()
-  .domain([startDate, d3.timeDay.offset(new Date(), 0)])
+  .domain([startDate, d3.timeDay.offset(new Date().setHours(0,0,0,0), 1)])
   .rangeRound([margin.left, w - margin.right])
 
 const bandwidth = (x(d3.timeDay.offset(startDate, 1)) - x(startDate)) * 0.8
