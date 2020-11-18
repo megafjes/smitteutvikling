@@ -1,4 +1,17 @@
-dayjs.locale('nb')
+const english = false
+
+const lookup = {
+  studenter: 'students',
+  ansatte: 'employees'
+}
+
+catchOK = fac => {
+  return fac == 'ØK' ? 'OK' : fac
+}
+
+if (!english) {
+  dayjs.locale('nb')
+}
 
 const ntnuBlue = "#00509e"
 
@@ -174,7 +187,7 @@ drawSection = (cityDiv, data, group) => {
     .attr('y', margin.top - 30)
     .style('font-family', "'Open Sans', sans-serif")
     .style('font-weight', 600)
-    .text(`${data[0]}, ${group}`)
+    .text(english ? `${data[0]}, ${lookup[group]}` : `${data[0]}, ${group}`)
 
   svg.append('text')
     .attr('x', margin.left)
@@ -182,10 +195,10 @@ drawSection = (cityDiv, data, group) => {
     .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'small')
     .style('font-weight', 300)
-    .text(`Totalt antall innmeldt smittede:`)
+    .text(english ? 'Total number of reported infected:' :`Totalt antall innmeldt smittede:`)
 
   svg.append('text')
-    .attr('x', margin.left + 188)
+    .attr('x', english ? margin.left + 210 : margin.left + 188)
     .attr('y', margin.top - 15)
     .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'small')
@@ -231,7 +244,7 @@ drawHeatmap = (div, data, group) => {
     .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'small')
     .style('font-weight', 300)
-    .text(`${data[0]}:`)
+    .text(english ? `${catchOK(data[0])}:` : `${data[0]}:`)
 
   svg.append('text')
     .attr('text-anchor', 'end')
@@ -262,7 +275,7 @@ drawLegend = (div) => {
     .style('font-family', "'Open Sans', sans-serif")
     .style('font-size', 'medium')
     .style('font-weight', 600)
-    .text(`Per fakultet:`)
+    .text(english ? 'By faculty:' : `Per fakultet:`)
 
   const legendBoxWidth = 30
 
@@ -363,8 +376,10 @@ drawChart = (data, group, cssSelector) => {
   })
 }
 
-(async () => await d3.dsv(';', "https://www.ntnu.no/assets/visualization/2020/covid19stats.csv")
-// (async () => await d3.csv("https://docs.google.com/spreadsheets/d/1m1jLMrbYZXM-aiX5dyBizJNO4BuolIYQvOoCbMJAim4/gviz/tq?tqx=out:csv")
+
+
+// (async () => await d3.dsv(';', "https://www.ntnu.no/assets/visualization/2020/covid19stats.csv")
+(async () => await d3.csv("https://docs.google.com/spreadsheets/d/1m1jLMrbYZXM-aiX5dyBizJNO4BuolIYQvOoCbMJAim4/gviz/tq?tqx=out:csv")
   .then(data => {
 
     dataNtnu = ({
